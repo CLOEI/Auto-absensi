@@ -7,7 +7,7 @@ const PASSWORD = process.env.PASSWORD;
 const NAMA = process.env.NAMA;
 const KELAS = process.env.KELAS;
 
-const JAM = '9:25'.split(':');
+const JAM = '7:00'.split(':');
 
 
 // We bypassing "This browser or app may not be secure" 
@@ -22,12 +22,13 @@ const bypass = async () => {
         await driver.findElement(SELENIUM.By.xpath('//*[@type="password"]')).sendKeys(PASSWORD);
         await driver.findElement(SELENIUM.By.xpath('//*[@id="passwordNext"]')).click();
         await sleep(2000);
-        //submitForm();
+        submitForm();
     } catch (error) {
         await driver.quit();
     }
 }
 
+// Ubah atau tambah setiap string xpath ke xpath form anda.
 const submitForm = async () => {
     try {
         const driver = new SELENIUM.Builder().forBrowser('chrome').build();
