@@ -7,13 +7,12 @@ const PASSWORD = process.env.PASSWORD;
 const NAMA = process.env.NAMA;
 const KELAS = process.env.KELAS;
 
-const JAM = '7:00'.split(':');
+const JAM = '8:00'.split(':');
 
-
+const driver = new SELENIUM.Builder().forBrowser('chrome').build();
 // We bypassing "This browser or app may not be secure" 
 const bypass = async () => {
     try {
-        const driver = new SELENIUM.Builder().forBrowser('chrome').build();
         await driver.get('https://stackoverflow.com/users/signup?ssrc=head&returnurl=%2users%2fstory%2fcurrent');
         await driver.findElement(SELENIUM.By.xpath('//*[@id="openid-buttons"]/button[1]')).click();
         await driver.findElement(SELENIUM.By.xpath('//*[@type="email"]')).sendKeys(EMAIL);
@@ -28,10 +27,9 @@ const bypass = async () => {
     }
 }
 
-// Ubah atau tambah setiap string xpath ke xpath form anda.
+// Tambah / edit xpath & value di bawah ini.
 const submitForm = async () => {
     try {
-        const driver = new SELENIUM.Builder().forBrowser('chrome').build();
         await driver.get(URL);
         await driver.findElement(SELENIUM.By.xpath('//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input')).sendKeys(NAMA);
         await driver.findElement(SELENIUM.By.xpath('//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input')).sendKeys(KELAS);
@@ -41,7 +39,7 @@ const submitForm = async () => {
         let onTime = false;
         while(onTime == false){
             const date = new Date();
-            if(date.getHours() == JAM[0] && date.getMinutes() == JAM[1]){
+            if(date.getHours() == JAM[0] && date.getMinutes() >= JAM[1]){
                 await driver.findElement(SELENIUM.By.xpath('//*[@id="mG61Hd"]/div[2]/div/div[3]/div[1]/div/div/span/span')).click();
                 console.log('OnTime = true');
                 onTime = true;
@@ -59,6 +57,10 @@ const submitForm = async () => {
     while(onTime == false){
         const date = new Date();
         if(date.getHours() == copyJam[0] && date.getMinutes() == copyJam[1] - 1){
+            bypass();
+            console.log('OnTime = true');
+            onTime = true;
+        }else if(date.getHours() == copyJam[0] && date.getMinutes() >= 0){
             bypass();
             console.log('OnTime = true');
             onTime = true;
