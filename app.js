@@ -60,9 +60,13 @@ const submitForm = async () => {
             bypass();
             console.log('OnTime = true');
             onTime = true;
-        }else if(date.getHours() == copyJam[0] && date.getMinutes() >= 0){
+        }else if(date.getHours() == copyJam[0] && JAM[1] == 0 && date.getMinutes() >= JAM[1]){
             bypass();
-            console.log('OnTime = true');
+            console.log('OnTime = true but late');
+            onTime = true;
+        }else if(date.getHours() == copyJam[0] && JAM[1] != 0 && date.getMinutes() >= JAM[1]){
+            bypass();
+            console.log('OnTime = true but late');
             onTime = true;
         }
     }
